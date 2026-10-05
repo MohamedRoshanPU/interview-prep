@@ -73,7 +73,7 @@ const LimitPagination: React.FC = () => {
           <div className="flex items-center gap-5">
             <button
               className="px-2 py-1 rounded-full bg-white border border-blue-400 text-xs"
-              onClick={() => setOffset((prev) => prev - limit)}
+              onClick={() => setOffset((prev) => Math.max(prev - limit, 0))}
               disabled={offset === 0}
             >
               {"<<"}Prev
@@ -81,13 +81,7 @@ const LimitPagination: React.FC = () => {
             <button
               className="px-2 py-1 rounded-full bg-white border border-blue-400 text-xs"
               onClick={() =>
-                setOffset((prev) => {
-                  if (totalNoOfUsers - offset > limit) {
-                    return prev + limit;
-                  } else {
-                    return prev + totalNoOfUsers - offset;
-                  }
-                })
+                setOffset((prev) => Math.min(prev + limit, totalNoOfUsers))
               }
             >
               Next {">>"}
